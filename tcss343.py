@@ -15,13 +15,34 @@
 
 
 
-
 def driver():
     print("Driver function is running")
+    list1 = [1,4,2]
+    answer = [[],False]
+    check = bruteForceAlgo(list1, 8)
+    print(check)
 
+def bruteForceAlgo(nums:list, target:int ):
+    result = []
+    
+    def dfs(index, path):
+        if index == len(nums):
+            result.append(path)
+            return
+        
+        dfs(index + 1, path + [nums[index]])
+        
+        dfs(index + 1, path)
+    
+    dfs(0, [])
 
-def bruteForceAlgo():
-    pass
+    for i in result:
+        if sum(i) == target:
+            return [i,True]
+
+    return [[],False]
+ 
+
 def DynamicProgramingAlgo():
     pass
 def CleverAlgo():
@@ -31,3 +52,4 @@ def CleverAlgo():
 
 if __name__ == "__main__":  
     driver()
+
