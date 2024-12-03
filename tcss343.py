@@ -13,6 +13,12 @@
       Time in milliseconds
       Table space used
       String of sum sequence that equals the target
+
+      makes a array of n length
+      put n random positive integers ranging from 1 - r in array
+      if boolean is true, randomly choose indexes and get sum of said index and make it the target
+      if boolean is false, adds all 
+
 '''
 def driver():
     print("Driver function is running")
@@ -20,7 +26,9 @@ def driver():
     answer = [[],False]
     check = bruteForceAlgo(list1, 8)
     print(check)
-
+    list2 = [1,2,3]
+    check = DynamicProgramingAlgo(list2, 0)
+    print(check)
 """
 Finds Subset sum in O(2^n) by creating a list of all possible subsets and iterates through list. 
 If there is a sum, will return the elements in a list that add up to the target, and True boolean
@@ -49,8 +57,39 @@ def bruteForceAlgo(nums:list, target:int ):
     return [[],False]
  
 
-def DynamicProgramingAlgo():
-    pass
+def DynamicProgramingAlgo(nums:list, target:int ):
+    My_Table = [[False] * (target + 1) for _ in range(len(nums))] # creates a 2d array with false in each index
+    res = [] # is the result
+    for i in range(len(nums)): # makes first column all true
+        My_Table[i][0] = True
+    
+    for j in range(1, target + 1): # sets first row of table, checking if nums[0] is less then target
+        if nums[0] == j:
+            My_Table[0][j] = True
+        else:
+            My_Table[0][j] = False
+    
+    
+    for i in range(1,len(nums)): # iterates starting at row two considering a different i amount of values
+        for j in range(1, target + 1): # goes through each possible value, seeing if it can be reached with the i different elements
+            if j >= nums[i]:
+                My_Table[i][j] = My_Table[i-1][j] or My_Table[i-1][j-nums[i]]
+            else:
+                My_Table[i][j] = My_Table[i-1][j]
+    # for row in My_Table:
+    #     print(row)
+    boo = My_Table[len(nums)-1][target] # whether the target can be reached
+    
+    if boo == False:
+        return [[], False]
+    i = len(nums) - 1
+    
+    j = target
+    while j != 0: # starting from the last index goes backwards, finds correct results
+        res.append(nums[i-1])
+        i = i-1 
+        j = j - nums[i]
+    return[res, True]
 def CleverAlgo():
     pass
 
