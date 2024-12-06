@@ -224,7 +224,7 @@ def CleverAlgo(nums:list, target:int):
                 j = len(sortedWeights)
             j += 1
     
-    return [correctSubset, boo]
+    return [correctSubset, boo] 
 
 
 if __name__ == "__main__":  
