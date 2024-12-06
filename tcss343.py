@@ -23,26 +23,19 @@ import time
 
 '''
 def driver():
-
-    subsets = []
-    
-
-
-
-
-
-    
+    subsets = [] 
     test1 = []
-    n = 20
-    r = 30
+
+    n = 5
+
+    r = 1000
     t = 0
     test1Pass = True
-    for i in range(n):
-        
+    # test1Pass = False
+    for i in range(n):    
         num = random.randint(1, r)
         test1.append(num)
     
-
     def listOfSubset(index, path): 
             if index == len(test1):
                 subsets.append(path)
@@ -52,15 +45,13 @@ def driver():
             
             listOfSubset(index + 1, path) # Recursive call if subset is not used.
 
-
-
     if not test1Pass:
         t = random.randint(sum(test1), sum(test1)*2)
     else:
-        listOfSubset(0, [])
-        index = random.randint(0, len(subsets)-1)
-        t = sum(subsets[index])
-
+        # listOfSubset(0, [])
+        # index = random.randint(0, len(subsets)-1)
+        t = sum([test1[random.randint(1,len(test1))], test1[random.randint(1,len(test1))], test1[random.randint(1,len(test1))]])
+    # t = random.randint(1, 52420)
     print(test1, "t = ", t)
 
     #Tests algorithms, prints runtime and outputs 
@@ -71,7 +62,7 @@ def driver():
     end_time = time.time()    # End time in seconds
     execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
     print("brute force:"f"Execution time: {execution_time_ms:.2f} ms")
-    print(check)
+    # print(check)
     
     start_time = time.time() 
 
@@ -80,7 +71,7 @@ def driver():
     end_time = time.time()    # End time in seconds
     execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
     print("DP:"f"Execution time: {execution_time_ms:.2f} ms")
-    print(check)
+    # print(check)
 
     start_time = time.time() 
 
@@ -89,7 +80,7 @@ def driver():
     end_time = time.time()    # End time in seconds
     execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
     print("Clever:"f"Execution time: {execution_time_ms:.2f} ms")
-    print(check)
+    # print(check)
         
     
 """
@@ -136,7 +127,7 @@ Input list: list of integers to check, int: target sum
 Output list: [list: sublist that adds up to target, boolean: True if there is a sublist that adds up to sum, False if not]
 """
 def DynamicProgramingAlgo(nums:list, target:int ):
-    start_time = time.time() 
+    # start_time = time.time() 
     
 
     My_Table = [[False] * (target + 1) for _ in range(len(nums))] # Creates a 2d array, initially with false in each index.
@@ -150,12 +141,12 @@ def DynamicProgramingAlgo(nums:list, target:int ):
         else:
             My_Table[0][j] = False # Else `False`.
     
-    end_time = time.time()    # End time in seconds
-    execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
-    print("1. Instantiateing: "f"Execution time: {execution_time_ms:.2f} ms")
+    # end_time = time.time()    # End time in seconds
+    # execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
+    # print("1. Instantiateing: "f"Execution time: {execution_time_ms:.2f} ms")
 
 
-    start_time = time.time() 
+    # start_time = time.time() 
     for i in range(1,len(nums)): # Iterates starting at row two considering a different i amount of values
         for j in range(1, target + 1): # Goes through each possible value, seeing if it can be reached with the i different elements
             if j >= nums[i]:
@@ -170,9 +161,9 @@ def DynamicProgramingAlgo(nums:list, target:int ):
     boo = My_Table[len(nums)-1][target] # Checks whether the target can be reached by the last array.
 
 
-    end_time = time.time()    # End time in seconds
-    execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
-    print("2. Find initial boolean: "f"Execution time: {execution_time_ms:.2f} ms")
+    # end_time = time.time()    # End time in seconds
+    # execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
+    # print("2. Find initial boolean: "f"Execution time: {execution_time_ms:.2f} ms")
 
     if boo == False:
         # If target is not applicable, returns empty list and 'False'.
@@ -181,7 +172,7 @@ def DynamicProgramingAlgo(nums:list, target:int ):
     i = len(nums) - 1
    
     j = target
-    start_time = time.time() 
+    # start_time = time.time() 
 
     while i > 0 and j > 0: # Starting from the last index goes backwards, finds correct results.
         if My_Table[i][j] and not My_Table[i-1][j] :# In the 2d array checks the current indeces and the indeces directly above.
@@ -191,12 +182,11 @@ def DynamicProgramingAlgo(nums:list, target:int ):
     if j > 0 and nums[0] == j: # If index is at the last row it cant check above it so we only need to check if there is still something to subtract form j or out remaining sum. Adds the last row if so.
         res.append(nums[0])
         
-    end_time = time.time()    # End time in seconds
-    execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
-    print("3. backTracking:"f"Execution time: {execution_time_ms:.2f} ms")
+    # end_time = time.time()    # End time in seconds
+    # execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
+    # print("3. backTracking:"f"Execution time: {execution_time_ms:.2f} ms")
 
     return[res, True] # Returns the subset and `True` when target has been reached.
-
 
 """
 The CleverAlgo finds if a subset of `nums` adds up to `target` and to find that subset if it exists.
