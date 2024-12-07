@@ -1,5 +1,6 @@
 import random
 import time
+
 '''Driver
 
     program tests 3 different algorithims for Subset Sum which returns a boolean if there is a sequence that adds up to a target number.
@@ -23,65 +24,71 @@ import time
 
 '''
 def driver():
+    
+    t = 0
     subsets = [] 
     test1 = []
 
-    n = 5
-
+    n = 6
     r = 1000
-    t = 0
-    test1Pass = True
-    # test1Pass = False
+    v = True
+
+
     for i in range(n):    
         num = random.randint(1, r)
         test1.append(num)
     
-    def listOfSubset(index, path): 
-            if index == len(test1):
-                subsets.append(path)
-                return
-            
-            listOfSubset(index + 1, path + [test1[index]]) # Recursive call if the current subset is added.
-            
-            listOfSubset(index + 1, path) # Recursive call if subset is not used.
+    def listOfSubset(index, path):
+        if index == len(test1):
+            subsets.append(path[:])  # Append a copy of the current path to subsets
+            return
+        
+        # Include the current element
+        path.append(test1[index])
+        listOfSubset(index + 1, path)
+        path.pop()  # Backtrack to remove the element
 
-    if not test1Pass:
+        # Exclude the current element
+        listOfSubset(index + 1, path)
+
+    if not v:
         t = random.randint(sum(test1), sum(test1)*2)
     else:
-        # listOfSubset(0, [])
-        # index = random.randint(0, len(subsets)-1)
-        t = sum([test1[random.randint(1,len(test1))], test1[random.randint(1,len(test1))], test1[random.randint(1,len(test1))]])
-    # t = random.randint(1, 52420)
-    print(test1, "t = ", t)
-
+        randNum = random.randint(1,n)
+        for i in range(randNum):
+            randomIndex = random.randint(1,len(test1)-1)
+            t += test1[randomIndex]
+    print(test1, "t=", t,"n=", n, "r=", r )
+#######################################################################################################
     #Tests algorithms, prints runtime and outputs 
-    start_time = time.time() 
+    start_time = time.perf_counter() 
 
-    check = bruteForceAlgo(test1, t)
+    #check = bruteForceAlgo(test1, t)
 
-    end_time = time.time()    # End time in seconds
+    end_time = time.perf_counter()    # End time in seconds
     execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
     print("brute force:"f"Execution time: {execution_time_ms:.2f} ms")
     # print(check)
-    
-    start_time = time.time() 
+#######################################################################################################   
+    start_time = time.perf_counter() 
 
     check = DynamicProgramingAlgo(test1, t)
 
-    end_time = time.time()    # End time in seconds
+    end_time = time.perf_counter()    # End time in seconds
     execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
     print("DP:"f"Execution time: {execution_time_ms:.2f} ms")
     # print(check)
+#######################################################################################################
+    start_time = time.perf_counter() 
 
-    start_time = time.time() 
+    #check = CleverAlgo(test1, t)
 
-    check = CleverAlgo(test1, t)
-
-    end_time = time.time()    # End time in seconds
+    end_time = time.perf_counter()    # End time in seconds
     execution_time_ms = (end_time - start_time) * 1000  # Convert to milliseconds
     print("Clever:"f"Execution time: {execution_time_ms:.2f} ms")
     # print(check)
-        
+########################################################################################################
+
     
 """
 Finds Subset sum in O(2^n) by creating a list of all possible subsets and iterates through list. 
