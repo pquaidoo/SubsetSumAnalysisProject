@@ -48,6 +48,7 @@ class SubsetSumTest:
         # Code to generate test data
         t = 0
         test1 = []
+        
         n = SubsetSumTest.LENGTH_OF_LIST
         r = SubsetSumTest.RANGE_OF_VALUES
         v = SubsetSumTest.PASSING_SUBSET
@@ -56,17 +57,21 @@ class SubsetSumTest:
         for i in range(n):
             num = random.randint(1, r)
             test1.append(num)
-
+        temp = list(test1)
+        print(temp)
+        print(test1)
         # Set target sum 't'
         if not v:
             t = random.randint(sum(test1), sum(test1) * 2)
         else:
             randNum = random.randint(1, n)
             for i in range(randNum):
-                randomIndex = random.randint(1, len(test1) - 1)
-                t += test1[randomIndex]
+                randomIndex = random.randint(1, len(temp))
+                t += temp[randomIndex-1]
+                temp.remove(temp[randomIndex-1])
 
         # Print the test case details
+        print(test1)
         print(Fore.CYAN + f"Test case: {test1}")
         print(Fore.YELLOW + f"Target sum(t): {t} \nLength(n): {n} \nRange(r): {r}\nExpected Boolean(v): {v}")
 
